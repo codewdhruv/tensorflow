@@ -68,11 +68,6 @@ pipeline:
                     command: |2-
                                 CI_DOCKER_BUILD_EXTRA_PARAMS='--build-arg py_major_minor_version=3.10' \
                                 ./tensorflow/tools/ci_build/ci_build.sh 
-                    reports:
-                      type: JUnit
-                      spec:
-                        paths:
-                          - /tensorflow/tools/ci_build/Dockerfile.cpu.arm64
                   when:
                     stageStatus: All
                   failureStrategies: []
