@@ -72,7 +72,7 @@ pipeline:
                       type: JUnit
                       spec:
                         paths:
-                          - /harness/tensorflow/tools/ci_build/Dockerfile.cpu.arm64
+                          - /tensorflow/tools/ci_build/Dockerfile.cpu.arm64
                   when:
                     stageStatus: All
                   failureStrategies: []
