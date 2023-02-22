@@ -48,12 +48,18 @@ pipeline:
                   spec:
                     shell: Sh
                     command: find /home/ubuntu/actions-runner/_work/tensorflow/tensorflow/. -name . -o -prune -exec sudo rm -rf -- {} + || true
+                  when:
+                    stageStatus: All
+                  failureStrategies: []
               - step:
                   type: Action
                   name: Checkout repository
                   identifier: Checkout_repository
                   spec:
                     uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
+                  when:
+                    stageStatus: All
+                  failureStrategies: []
               - step:
                   type: Run
                   name: Build and test pip wheel
@@ -63,6 +69,9 @@ pipeline:
                     command: |2-
                                 CI_DOCKER_BUILD_EXTRA_PARAMS='--build-arg py_major_minor_version=3.10' \
                                 ./tensorflow/tools/ci_build/ci_build.sh cpu.arm64 bash tensorflow/tools/ci_build/rel/ubuntu/cpu_arm64_pip.sh
+                  when:
+                    stageStatus: All
+                  failureStrategies: []
               - step:
                   type: Action
                   name: Upload pip wheel to GitHub
@@ -72,3 +81,6 @@ pipeline:
                     with:
                       name: tensorflow_py${{ matrix.pyver }}_wheel
                       path: /home/ubuntu/actions-runner/_work/tensorflow/tensorflow/whl/*.whl Footer
+                  when:
+                    stageStatus: All
+                  failureStrategies: []
